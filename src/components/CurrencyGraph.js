@@ -85,11 +85,6 @@ export class CurrencyGraph extends Component {
         }
     }
 
-    // return last x elements in array
-    filterData(arr, amount) {
-        return arr.slice(Math.max(arr.length - amount, 0));
-    }
-
     buildChartOptions() {
         return {
             title: {
@@ -127,6 +122,11 @@ export class CurrencyGraph extends Component {
                 }]
             }
         }
+    }
+
+    // return last x elements in array
+    filterData(arr, amount) {
+        return arr.slice(Math.max(arr.length - amount, 0));
     }
 
     onChangeDays(event) {

@@ -11,19 +11,23 @@ export class StorageService extends Component {
         return this.map.get(key) != null
     }
 
+    // get values from corresponding key
     getValue(key) {
         return this.map.get(key);
     }
 
+    // key used to save exchange values
     getExchangeKey(from, to) {
         return `${from}-${to}`;
     }
 
+    // key used to save daily graph values
     getDailyKey(from, to) {
         return `${from}-daily-${to}`;
     }
 
-    saveExchangeToMap(from, to, exchangeRate) {
+    // when we save exchange rate from Eur to Usd, we can also automatically calculate Usd to Eur
+    saveExchange(from, to, exchangeRate) {
         let key = this.getExchangeKey(from, to);
         let value = exchangeRate;
         console.log("saving", key, value);
@@ -35,14 +39,21 @@ export class StorageService extends Component {
         this.map.set(reversedKey, reversedValue);
     }
 
-    removeDailyFromMap(from, to) {
-        this.map.delete(this.getDailyKey(from, to));
-    }
-
-    saveDailyToMap(from, to, result) {
+    // saves daily graph values to map
+    saveDaily(from, to, result) {
         let key = this.getDailyKey(from, to);
         console.log("Saving " + key + " to daily map ")
         this.map.set(key, result);
+    }
+
+    // remove daily graph value from map
+    removeDaily(from, to) {
+        this.map.delete(this.getDailyKey(from, to));
+    }
+
+    // removes exchange value from map
+    removeExchange(from, to) {
+        this.map.delete(this.getExchangeKey(from, to));
     }
 }
 

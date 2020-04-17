@@ -36,7 +36,7 @@ export class AlphaVantageService extends Component {
 
                         // save value
                         console.log("saving " + key + "  to map")
-                        this.storage.saveExchangeToMap(from, to, exchangeRate);
+                        this.storage.saveExchange(from, to, exchangeRate);
 
                         return result.toFixed(4);
                     } catch (err) {
@@ -83,12 +83,12 @@ export class AlphaVantageService extends Component {
                             close: close.reverse()
                         }
 
-                        this.storage.saveDailyToMap(from, to, result);
+                        this.storage.saveDaily(from, to, result);
                         return result;
                     } else {
                         // Problems with request, we remove the values...
                         console.info("Removing key " + this.storage.getDailyKey(from, to) + " due problems");
-                        this.storage.removeDailyFromMap(from, to);
+                        this.storage.removeDaily(from, to);
                         // return default value EUR: EUR
                         return this.storage.getValue(this.storage.getDailyKey("EUR", "EUR"));
                     }
