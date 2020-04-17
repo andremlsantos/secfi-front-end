@@ -11,7 +11,7 @@ export class StorageService extends Component {
         return this.map.get(key) != null
     }
 
-    get(key) {
+    getValue(key) {
         return this.map.get(key);
     }
 

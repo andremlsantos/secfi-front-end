@@ -22,7 +22,7 @@ export class AlphaVantageService extends Component {
         } else if (this.storage.isPresent(key)) {
             // we can grab the values already saved
             console.log("values already requested");
-            let result = this.storage.get(key) * amount;
+            let result = this.storage.getValue(key) * amount;
             return result.toFixed(4);
         } else {
             let API_CALL = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${from}&to_currency=${to}&apikey=${this.state.API_KEY}`;
@@ -54,7 +54,7 @@ export class AlphaVantageService extends Component {
         if (this.storage.isPresent(key)) {
             // we already did request, lets return values
             console.log("returning old values from daily");
-            return this.storage.get(key);
+            return this.storage.getValue(key);
         } else {
             let API_CALL = `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&outputsize=compact&apikey=${this.state.API_KEY}`
             let dates = [];
@@ -90,7 +90,7 @@ export class AlphaVantageService extends Component {
                         console.info("Removing key " + this.storage.getDailyKey(from, to) + " due problems");
                         this.storage.removeDailyFromMap(from, to);
                         // return default value EUR: EUR
-                        return this.storage.get(this.storage.getDailyKey("EUR", "EUR"));
+                        return this.storage.getValue(this.storage.getDailyKey("EUR", "EUR"));
                     }
                 })
                 .catch(err => {
