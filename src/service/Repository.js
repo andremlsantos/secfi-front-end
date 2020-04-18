@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class StorageService extends Component {
+export class Repository extends Component {
     constructor() {
         super();
 
@@ -57,4 +57,4 @@ export class StorageService extends Component {
     }
 }
 
-export default StorageService
+export default Repository

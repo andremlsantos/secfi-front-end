@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import StorageService from './StorageService';
+import Repository from './Repository';
 
 export class AlphaVantageService extends Component {
     constructor(props) {
@@ -9,21 +9,21 @@ export class AlphaVantageService extends Component {
             API_KEY: "0VY8POTUN3UDETPX"
         }
 
-        this.storage = new StorageService();
+        this.repository = new Repository();
     }
 
     // For the exchange
     async fetchExchangeRate(from, to, amount) {
-        let key = this.storage.getExchangeKey(from, to);
+        let key = this.repository.getExchangeKey(from, to);
 
         if (from === to) {
             // we don't need to calculate anything, just return amount
             console.log("from == to, returning amount");
             return amount;
-        } else if (this.storage.isPresent(key)) {
+        } else if (this.repository.isPresent(key)) {
             // we can grab the values already saved
             console.log("values already requested");
-            let result = this.storage.getValue(key) * amount;
+            let result = this.repository.getValue(key) * amount;
             return result.toFixed(4);
         } else {
             let API_CALL = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${from}&to_currency=${to}&apikey=${this.state.API_KEY}`;
@@ -37,7 +37,7 @@ export class AlphaVantageService extends Component {
 
                         // save value
                         console.log("saving " + key + "  to map")
-                        this.storage.saveExchange(from, to, exchangeRate);
+                        this.repository.saveExchange(from, to, exchangeRate);
 
                         return result.toFixed(4);
                     } catch (err) {
@@ -51,12 +51,12 @@ export class AlphaVantageService extends Component {
 
     // For the graph
     async fetchDaily(from, to) {
-        let key = this.storage.getDailyKey(from, to);
+        let key = this.repository.getDailyKey(from, to);
 
-        if (this.storage.isPresent(key)) {
+        if (this.repository.isPresent(key)) {
             // we already did request, lets return values
             console.log("returning old values from daily");
-            return this.storage.getValue(key);
+            return this.repository.getValue(key);
         } else {
             let API_CALL = `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&outputsize=compact&apikey=${this.state.API_KEY}`
             let dates = [];
@@ -85,14 +85,14 @@ export class AlphaVantageService extends Component {
                             close: close.reverse()
                         }
 
-                        this.storage.saveDaily(from, to, result);
+                        this.repository.saveDaily(from, to, result);
                         return result;
                     } else {
                         // Problems with request, we remove the values...
-                        console.info("Removing key " + this.storage.getDailyKey(from, to) + " due problems");
-                        this.storage.removeDaily(from, to);
+                        console.info("Removing key " + this.repository.getDailyKey(from, to) + " due problems");
+                        this.repository.removeDaily(from, to);
                         // return default value EUR: EUR
-                        return this.storage.getValue(this.storage.getDailyKey("EUR", "EUR"));
+                        return this.repository.getValue(this.repository.getDailyKey("EUR", "EUR"));
                     }
                 })
                 .catch(err => {
