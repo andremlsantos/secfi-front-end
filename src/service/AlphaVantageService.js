@@ -12,6 +12,7 @@ export class AlphaVantageService extends Component {
         this.storage = new StorageService();
     }
 
+    // For the exchange
     async fetchExchangeRate(from, to, amount) {
         let key = this.storage.getExchangeKey(from, to);
 
@@ -48,6 +49,7 @@ export class AlphaVantageService extends Component {
         }
     }
 
+    // For the graph
     async fetchDaily(from, to) {
         let key = this.storage.getDailyKey(from, to);
 

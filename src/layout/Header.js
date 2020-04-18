@@ -7,8 +7,8 @@ export class Header extends Component {
             <nav>
                 <ul>
                     <li><a href="https://www.secfi.com/" className="left logo"> </a></li>
-                    <li><a href="#" className="right">Contact</a></li>
-                    <li><a href="#" className="right">GitHub</a></li>
+                    <li><a href="mailto:andremlsantos@protonmail.com?Subject=Next%20call" className="right">Contact</a></li>
+                    <li><a href=" https://github.com/andremlsantos/secfi-front-end.git" className="right">GitHub</a></li>
                 </ul>
             </nav>
         )
