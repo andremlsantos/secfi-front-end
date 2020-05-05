@@ -1,5 +1,5 @@
 {
-    "name": "stock",
+    "name": "secfi-front-end",
     "version": "0.1.0",
     "private": true,
     "homepage": "https://andremlsantos.github.io/secfi-front-end/",
@@ -19,7 +19,7 @@
     },
     "scripts": {
         "deploy": "npm run build&&gh-pages -d build",
-        "start": "react-scripts --max_old_space_size=4096 start",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
